@@ -1,0 +1,30 @@
+import { useEffect, useState } from "react";
+import { ArticleContext } from "./ArticleContext.jsx";
+import { articles } from "../../utils/data.js";
+
+const ARTICLES = articles;
+export function ArticleProvider({ children }) {
+  const [articles, setArticles] = useState([]);
+  const [articlesList, setArticlesList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    articles[0].category
+  );
+  const handleCategorySelect = (category) => {
+    const updateSelectedCategory = () => setSelectedCategory(category);
+    updateSelectedCategory();
+  };
+
+  return (
+    <ArticleContext.Provider
+      value={{
+        articlesList,
+        setArticlesList,
+        selectedCategory,
+        setSelectedCategory,
+        handleCategorySelect,
+      }}
+    >
+      {children}
+    </ArticleContext.Provider>
+  );
+}
