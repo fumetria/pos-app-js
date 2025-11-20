@@ -42,7 +42,7 @@ export default function UpdateForm({
     <>
       <div className="bg-stone-100 rounded h-full border-b border-stone-300">
         <form action="">
-          <div className="py-3 px-2 grid">
+          <div className="xl:py-3 xl:px-2 grid">
             <label htmlFor="details" className="font-semibold uppercase">
               Nombre Articulo
             </label>
@@ -55,7 +55,7 @@ export default function UpdateForm({
               disabled={true}
             />
           </div>
-          <div className="py-3 px-2 grid">
+          <div className="xl:py-3 xl:px-2 grid">
             <label htmlFor="details" className="font-semibold uppercase">
               Detalles
             </label>
@@ -68,7 +68,7 @@ export default function UpdateForm({
               onChange={handleChange}
             />
           </div>
-          <div className="my-3 mx-2 grid">
+          <div className="xl:py-3 xl:px-2 grid">
             <label htmlFor="quantity" className="font-semibold uppercase">
               Cantidad
             </label>
@@ -81,7 +81,7 @@ export default function UpdateForm({
               onChange={handleChange}
             />
           </div>
-          <div className="my-3 mx-2 grid">
+          <div className="xl:py-3 xl:px-2 grid">
             <label htmlFor="price" className="font-semibold uppercase">
               Precio
             </label>
