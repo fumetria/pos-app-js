@@ -51,7 +51,7 @@ export default function UpdateForm({
               id="name"
               name="name"
               value={formData.name}
-              className="bg-stone-300 border rounded py-2 ps-3"
+              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
               disabled={true}
             />
           </div>
@@ -64,7 +64,7 @@ export default function UpdateForm({
               id="details"
               name="details"
               value={formData.details}
-              className="bg-stone-300 border rounded py-2 ps-3"
+              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
               onChange={handleChange}
             />
           </div>
@@ -77,7 +77,7 @@ export default function UpdateForm({
               id="quantity"
               name="quantity"
               value={formData.quantity}
-              className="bg-stone-300 border rounded py-2 ps-3"
+              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
               onChange={handleChange}
             />
           </div>
@@ -90,11 +90,11 @@ export default function UpdateForm({
               id="price"
               name="price"
               value={formData.price}
-              className="bg-stone-300 border rounded py-2 ps-3"
+              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
               onChange={handleChange}
             />
           </div>
-          <div className="grid justify-items-center my-3">
+          <div className="grid justify-items-center my-1 xl:my-3">
             <button
               type="button"
               className="xl:text-xl bg-blue-400 text-stone-100 font-semibold px-2 py-1 rounded"
