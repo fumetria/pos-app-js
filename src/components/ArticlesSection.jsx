@@ -6,7 +6,7 @@ function ArticleButton({ article, handleNewArticleLine }) {
       <div
         key={article.id}
         onClick={() => handleNewArticleLine(article)}
-        className="grid grid_row_[1fr_auto] bg-stone-100 justify-items-center items-center size-20 md:size-24 xl:size-30 cursor-pointer px-1 rounded shadow"
+        className="grid grid_row_[1fr_auto] bg-stone-100 justify-items-center items-center size-20 md:size-24 xl:size-30 cursor-pointer px-1 rounded shadow overflow-scroll"
       >
         <div>
           <h3 className="text-base xl:text-3xl text-center font-semibold text-red-600">
