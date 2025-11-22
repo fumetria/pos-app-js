@@ -24,7 +24,7 @@ export default function CategorySection({
     <>
       <section
         id="category-section"
-        className="flex flex-wrap gap-2 overflow-y-scroll m-2 justify-center"
+        className="flex flex-wrap gap-2 overflow-auto m-2 justify-center"
       >
         {categoryList.length > 0 &&
           categoryList.map((category) => (

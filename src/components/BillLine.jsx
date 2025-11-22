@@ -16,7 +16,7 @@ export default function BillLine({
       >
         <td className="text-center">{article.id}</td>
         <td className="uppercase">{article.name}</td>
-        <td>{article.details}</td>
+        <td className="uppercase">{article.details}</td>
         <td className="text-center">{article.quantity}</td>
         <td className="text-center">
           {Number(article.price).toFixed(2).toString().replace(".", ",")}

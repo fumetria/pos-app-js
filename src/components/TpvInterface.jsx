@@ -1,41 +1,39 @@
 import ArticlesLineTable from "./ArticleLinesTable.jsx";
 import ArticlesSection from "./ArticlesSection.jsx";
 import CategorySection from "./CategorySection.jsx";
-import { useEffect, useState } from "react";
-import { articles } from "../utils/data.js";
+import { useEffect, useContext } from "react";
 import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faPrint } from "@fortawesome/free-solid-svg-icons";
 import UpdateForm from "./UpdateForm.jsx";
-// import { ArticleProvider } from "./context/ArticleProvider.tsx";
-// import { useFetchArticles } from "../hooks/useFetchArticles.tsx";
+import { PosContext } from "./context/PosContext.jsx";
 
 export default function TpvInterface() {
-  // const url =
-  //   "https://68dc4aaa7cd1948060a9ef39.mockapi.io/api/v1/fuApi/articles";
-  // const [query, setQuery] = useState("");
-  // const [reloadArticles, setReloadArticles] = useState(false);
-  // const articles = useFetchArticles({ url, query, reloadArticles });
-  const [articlesList, setArticlesList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(
-    articles[0].category
-  );
-  const [articlesLines, setArticlesLines] = useState([]);
-  const [totalBill, setTotalBill] = useState(0);
+  const {
+    articles,
+    setArticles,
+    reloadArticles,
+    setReloadArticles,
+    articlesList,
+    setArticlesList,
+    selectedCategory,
+    setSelectedCategory,
+    handleCategorySelect,
+    articlesLines,
+    setArticlesLines,
+    totalBill,
+    setTotalBill,
+    selectedArticleLine,
+    setSelectedArticleLine,
+  } = useContext(PosContext);
 
-  const URL = "http://localhost:6500";
-
-  const [selectedArticleLine, setSelectedArticleLine] = useState(null);
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-  };
+  const printerURL = "http://localhost:6500";
 
   const handleNewArticleLine = (article) => {
     setArticlesLines((prevLines) => {
       // Si el articulo ya esta en pantalla, nos dará el indice de este
       const existingIndex = prevLines.findIndex(
-        (line) => line.id === article.id
+        (line) => line.id === article.cod_art
       );
 
       if (existingIndex !== -1) {
@@ -52,7 +50,7 @@ export default function TpvInterface() {
         return updatedLines;
       } else {
         const newLine = {
-          id: article.id,
+          id: article.cod_art,
           name: article.name,
           quantity: 1,
           price: Number(article.pvp),
@@ -108,7 +106,7 @@ export default function TpvInterface() {
   }, [articlesLines]);
 
   const handleSendData = async (articlesLines) => {
-    await fetch(URL + "/print", {
+    await fetch(printerURL + "/print", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ articlesLines }),
@@ -118,7 +116,7 @@ export default function TpvInterface() {
   };
 
   const handleOpenDrawer = async () => {
-    await fetch(URL + "/open-drawer", {
+    await fetch(printerURL + "/open-drawer", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({}),
@@ -145,16 +143,16 @@ export default function TpvInterface() {
     <>
       <section
         id="tpv-interface"
-        className="h-screen bg-stone-100 grid grid-cols-7 grid-rows-[1fr_auto_auto_auto_auto] text-black"
+        className="h-screen bg-stone-100 grid grid-cols-7 grid-rows-[1fr_1fr_auto_auto_auto_auto] text-black"
       >
-        <div className="col-start-1 col-end-5 row-start-1 row-end-2 justify-start items-center pb-4 overflow-y-scroll">
+        <div className="col-start-1 col-end-5 row-start-1 row-end-3 justify-start items-center pb-4 overflow-y-scroll">
           <ArticlesLineTable
             articlesLines={articlesLines}
             selectedArticleLine={selectedArticleLine}
             handleSelectArticleLine={handleSelectArticleLine}
           />
         </div>
-        <div className="col-start-1 col-end-5  row-start-2 row-end-3 bg-stone-600 text-stone-100 flex justify-end text-3xl py-4">
+        <div className="col-start-1 col-end-5  row-start-3 row-end-4 bg-stone-600 text-stone-100 flex justify-end text-3xl py-4">
           <h3>
             Total:{" "}
             <span className="font-semibold text-4xl">
@@ -163,61 +161,62 @@ export default function TpvInterface() {
             €
           </h3>
         </div>
-        <div className="col-start-1 col-end-3 row-start-3 row-end-6 bg-stone-300 m-2 rounded">
-          {/* <ArticleProvider> */}
+        <div className="col-start-1 col-end-3 row-start-4 row-end-5 bg-stone-300 m-2 rounded overflow-y-scroll">
           <CategorySection
             articles={articles}
             handleCategorySelect={handleCategorySelect}
             categorySelect={selectedCategory}
           />
-          {/* </ArticleProvider> */}
         </div>
-        <div className="col-start-5 col-end-6 row-start-1 row-end-3">
+        <div className="col-start-5 col-end-6 row-start-1 row-end-4">
           <ArticleLinesTableAsideBtns
             selectedArticleLine={selectedArticleLine}
             handleDeleteLine={handleDeleteLine}
           />
         </div>
-        <div className="col-start-6 col-end-7 row-start-1 row-end-3 bg-stone-300 rounded border border-stone-300">
+        <div className="col-start-6 col-end-7 row-start-1 row-end-4 bg-stone-300 rounded border border-stone-300">
           <UpdateForm
             selectedArticleLine={selectedArticleLine}
             handleUpdateArticleLine={handleUpdateArticleLine}
           />
         </div>
-        <div className="col-start-3 col-end-7 row-start-3 row-end-6 bg-stone-300 m-2 rounded">
+        <div className="col-start-3 col-end-6 row-start-4 row-end-5 bg-stone-300 m-2 rounded">
           <ArticlesSection
             articles={articlesList}
             handleNewArticleLine={handleNewArticleLine}
             handleSelectArticleLine={handleSelectArticleLine}
           />
         </div>
-        <div className="bg-grey-300 col-start-7 col-end-8 row-start-1 row-end-7 bg-stone-100 grid grid-rows-[auto_1fr] gap-2 border-s border-stone-300">
-          <div className="grid grid-cols-2 justify-items-center gap-2">
-            {" "}
+        <div className="bg-grey-300 col-start-7 col-end-8 row-start-1 row-end-7 bg-stone-100 grid grid-rows-2 gap-2 border-s border-stone-300">
+          <div className="flex flex-col justify-center justify-items-center items-center">
+            <img src="/iestacio_logo.png" alt="ies estació logo" />
+            <p className="font-semibold text-2xl">Cafeteria L'Estació</p>
+          </div>
+          <div className="grid xl:grid-cols-2 justify-items-center gap-2">
             <button
               type="button"
-              className="px-2 py-1 size-30 rounded bg-gray-400 cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={handleOpenDrawer}
             >
-              Abrid cajón
+              Abrir cajón
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-30 rounded bg-gray-400 cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={() => handleSendData(articlesLines)}
             >
               Imprimir
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-30 rounded bg-gray-400 cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
               <FontAwesomeIcon icon={faPrint} size="2x" />
               Configurar Impresora
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-30 rounded bg-red-700 cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-30 rounded bg-red-700 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
               <FontAwesomeIcon icon={faDoorOpen} size="2x" />
               <p>Salir</p>

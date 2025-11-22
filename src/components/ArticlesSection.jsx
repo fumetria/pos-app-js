@@ -10,7 +10,7 @@ function ArticleButton({ article, handleNewArticleLine }) {
       >
         <div>
           <h3 className="text-base xl:text-3xl text-center font-semibold text-red-600">
-            {article.id}
+            {article.cod_art}
           </h3>
         </div>
         <div>
