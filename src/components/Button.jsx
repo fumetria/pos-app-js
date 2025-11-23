@@ -9,7 +9,7 @@ export default function Button({
       <button
         type="button"
         title={btnTitle}
-        className={`text-base font-light md:text-lg md:size-24 xl:size-30 xl:font-semibold ${
+        className={`text-base font-light md:size-24 xl:size-30 xl:font-semibold ${
           label == categorySelect
             ? "bg-blue-400 text-stone-100"
             : "bg-stone-100 text-stone-900"

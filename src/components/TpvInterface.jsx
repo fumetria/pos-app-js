@@ -5,8 +5,11 @@ import { useEffect, useContext } from "react";
 import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faPrint } from "@fortawesome/free-solid-svg-icons";
-import UpdateForm from "./UpdateForm.jsx";
+import UpdateForm from "./ArticleLineUpdateForm.jsx";
 import { PosContext } from "./context/PosContext.jsx";
+import AsideButton from "./AsideButton.jsx";
+import ArticleLineUpdateForm from "./ArticleLineUpdateForm.jsx";
+import ArticleCreateForm from "./ArticleCreateForm.jsx";
 
 export default function TpvInterface() {
   const {
@@ -152,7 +155,15 @@ export default function TpvInterface() {
             handleSelectArticleLine={handleSelectArticleLine}
           />
         </div>
-        <div className="col-start-1 col-end-5  row-start-3 row-end-4 bg-stone-600 text-stone-100 flex justify-end text-3xl py-4">
+        <div className="col-start-1 col-end-5  row-start-3 row-end-4 bg-stone-600 text-stone-100 flex justify-between text-3xl px-2 py-1 xl:py-4">
+          <div className="row-start-1 row-end-2">
+            <AsideButton
+              label="Eliminar"
+              selectedArticleLine={selectedArticleLine}
+              handleDeleteLine={handleDeleteLine}
+              style={"danger"}
+            />
+          </div>
           <h3>
             Total:{" "}
             <span className="font-semibold text-4xl">
@@ -168,31 +179,43 @@ export default function TpvInterface() {
             categorySelect={selectedCategory}
           />
         </div>
-        <div className="col-start-5 col-end-6 row-start-1 row-end-4">
+        {/* <div className="col-start-5 col-end-6 row-start-1 row-end-4">
           <ArticleLinesTableAsideBtns
             selectedArticleLine={selectedArticleLine}
             handleDeleteLine={handleDeleteLine}
           />
-        </div>
-        <div className="col-start-6 col-end-7 row-start-1 row-end-4 bg-stone-300 rounded border border-stone-300">
-          <UpdateForm
+        </div> */}
+        <div className="col-start-5 col-end-7 row-start-1 row-end-4 bg-stone-300 rounded border-s border-stone-300">
+          <ArticleLineUpdateForm
             selectedArticleLine={selectedArticleLine}
             handleUpdateArticleLine={handleUpdateArticleLine}
           />
         </div>
-        <div className="col-start-3 col-end-6 row-start-4 row-end-5 bg-stone-300 m-2 rounded">
+        <div className="col-start-5 col-end-7 row-start-4 row-end-6 bg-stone-300 rounded border-s border-t border-stone-300">
+          <ArticleCreateForm
+            selectedArticleLine={selectedArticleLine}
+            handleUpdateArticleLine={handleUpdateArticleLine}
+          />
+        </div>
+        <div className="col-start-3 col-end-5 row-start-4 row-end-5 bg-stone-300 m-2 rounded">
           <ArticlesSection
             articles={articlesList}
             handleNewArticleLine={handleNewArticleLine}
             handleSelectArticleLine={handleSelectArticleLine}
           />
         </div>
-        <div className="bg-grey-300 col-start-7 col-end-8 row-start-1 row-end-7 bg-stone-100 grid grid-rows-2 gap-2 border-s border-stone-300">
+        <div className="bg-grey-300 col-start-7 col-end-8 row-start-1 row-end-6 bg-stone-100 py-2 flex flex-col justify-between border-s border-stone-300">
           <div className="flex flex-col justify-center justify-items-center items-center">
-            <img src="/iestacio_logo.png" alt="ies estació logo" />
-            <p className="font-semibold text-2xl">Cafeteria L'Estació</p>
+            <img
+              src="/iestacio_logo.png"
+              alt="ies estació logo"
+              className="w-[100px] h-20 xl:w-[153px] xl:h-[100px]"
+            />
+            <p className="text-center font-semibold text-lg xl:text-2xl">
+              Cafeteria L'Estació
+            </p>
           </div>
-          <div className="grid xl:grid-cols-2 justify-items-center gap-2">
+          <div className="grid xl:grid-cols-2 justify-items-center gap-1 xl:gap-2">
             <button
               type="button"
               className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
@@ -205,13 +228,13 @@ export default function TpvInterface() {
               className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={() => handleSendData(articlesLines)}
             >
+              <FontAwesomeIcon icon={faPrint} size="2x" />
               Imprimir
             </button>
             <button
               type="button"
               className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
-              <FontAwesomeIcon icon={faPrint} size="2x" />
               Configurar Impresora
             </button>
             <button

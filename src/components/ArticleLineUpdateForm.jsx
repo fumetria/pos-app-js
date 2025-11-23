@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function UpdateForm({
+export default function ArticleLineUpdateForm({
   selectedArticleLine,
   handleUpdateArticleLine,
 }) {
@@ -40,9 +40,9 @@ export default function UpdateForm({
 
   return (
     <>
-      <div className="bg-stone-100 rounded h-full border-b border-stone-300">
+      <div className="bg-stone-100 h-full  border-stone-300 px-2">
         <form action="">
-          <div className="xl:py-3 xl:px-2 grid">
+          <div className="grid">
             <label htmlFor="details" className="font-semibold uppercase">
               Nombre Articulo
             </label>
@@ -51,11 +51,11 @@ export default function UpdateForm({
               id="name"
               name="name"
               value={formData.name}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
+              className="bg-stone-300 border rounded xl:py-2 ps-3"
               disabled={true}
             />
           </div>
-          <div className="xl:py-3 xl:px-2 grid">
+          <div className="grid">
             <label htmlFor="details" className="font-semibold uppercase">
               Detalles
             </label>
@@ -68,7 +68,7 @@ export default function UpdateForm({
               onChange={handleChange}
             />
           </div>
-          <div className="xl:py-3 xl:px-2 grid">
+          <div className="grid">
             <label htmlFor="quantity" className="font-semibold uppercase">
               Cantidad
             </label>
@@ -81,7 +81,7 @@ export default function UpdateForm({
               onChange={handleChange}
             />
           </div>
-          <div className="xl:py-3 xl:px-2 grid">
+          <div className="grid">
             <label htmlFor="price" className="font-semibold uppercase">
               Precio
             </label>
@@ -94,7 +94,7 @@ export default function UpdateForm({
               onChange={handleChange}
             />
           </div>
-          <div className="grid justify-items-center my-1 xl:my-3">
+          <div className="grid justify-items-center my-1 ">
             <button
               type="button"
               className="xl:text-xl bg-blue-400 text-stone-100 font-semibold px-2 py-1 rounded"
