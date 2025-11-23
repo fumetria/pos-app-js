@@ -33,6 +33,7 @@ export default function CategorySection({
               label={category}
               handleClick={() => handleCategorySelect(category)}
               categorySelect={categorySelect}
+              btnTitle={category}
             />
           ))}
       </section>

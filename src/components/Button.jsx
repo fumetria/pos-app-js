@@ -1,8 +1,14 @@
-export default function Button({ label, handleClick, categorySelect }) {
+export default function Button({
+  label,
+  handleClick,
+  categorySelect,
+  btnTitle,
+}) {
   return (
     <>
       <button
         type="button"
+        title={btnTitle}
         className={`text-base font-light md:text-lg md:size-24 xl:size-30 xl:font-semibold ${
           label == categorySelect
             ? "bg-blue-400 text-stone-100"
