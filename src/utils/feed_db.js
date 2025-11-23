@@ -123,7 +123,7 @@ export const articles = [
         "cod_art": "3D",
         "name": "AMSTEL 1L",
         "category": "CERVEZAS",
-        "pvp": 2.35,
+        "pvp": 4,
     },
     {
         "cod_art": "1C",
