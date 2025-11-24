@@ -97,7 +97,7 @@ export default function ArticleLineUpdateForm({
           <div className="grid justify-items-center my-1 ">
             <button
               type="button"
-              className="xl:text-xl bg-blue-400 text-stone-100 font-semibold px-2 py-1 rounded"
+              className="xl:text-xl bg-blue-400 hover:ring hover:bg-blue-200 hover:text-blue-400 ring-blue-400 text-stone-100 font-semibold px-2 py-1 rounded"
               onClick={() => handleUpdateArticleLine(formData)}
             >
               Actualizar
