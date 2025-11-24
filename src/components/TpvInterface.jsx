@@ -168,7 +168,7 @@ export default function TpvInterface() {
             €
           </h3>
         </div>
-        <div className="col-start-1 col-end-3 row-start-4 row-end-5 bg-stone-300 m-2 rounded overflow-y-scroll">
+        <div className="col-start-1 col-end-3 row-start-4 row-end-6 bg-stone-300 m-2 rounded overflow-y-scroll">
           <CategorySection
             articles={articles}
             handleCategorySelect={handleCategorySelect}
@@ -190,7 +190,7 @@ export default function TpvInterface() {
         <div className="col-start-5 col-end-7 row-start-4 xl:row-start-3 row-end-6 bg-stone-300 rounded border-s border-t border-stone-300">
           <ArticleCreateForm />
         </div>
-        <div className="col-start-3 col-end-5 row-start-4 row-end-5 bg-stone-300 m-2 rounded overflow-y-scroll">
+        <div className="col-start-3 col-end-5 row-start-4 row-end-6 bg-stone-300 m-2 rounded overflow-y-scroll">
           <ArticlesSection
             articles={articlesList}
             handleNewArticleLine={handleNewArticleLine}
