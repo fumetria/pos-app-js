@@ -142,7 +142,7 @@ export default function TpvInterface() {
     <>
       <section
         id="tpv-interface"
-        className="h-screen bg-stone-100 grid grid-cols-7 grid-rows-[1fr_1fr_auto_auto_auto_auto] text-black"
+        className="h-screen bg-stone-100 grid grid-cols-7 grid-rows-[1fr_1fr_auto_1fr_1fr_auto] text-black"
       >
         <div className="col-start-1 col-end-5 row-start-1 row-end-3 justify-start items-center pb-4 overflow-y-scroll">
           <ArticlesLineTable
