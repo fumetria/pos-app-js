@@ -34,7 +34,7 @@ export function PosProvider({ children }) {
 
   useEffect(() => {
     if (articles.length > 0) {
-      setSelectedCategory(articles[0].category);
+      setSelectedCategory(articles[0].category.toLowerCase());
     }
   }, [articles]);
   const handleCategorySelect = (category) => {
@@ -44,6 +44,7 @@ export function PosProvider({ children }) {
   return (
     <PosContext.Provider
       value={{
+        apiURL,
         articles,
         setArticles,
         reloadArticles,
