@@ -108,7 +108,7 @@ export default function TpvInterface() {
     await fetch(printerURL + "/print", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ articlesLines }),
+      body: JSON.stringify({ articlesLines, totalBill }),
     }).then(() => {
       setArticlesLines([]);
     });
