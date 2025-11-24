@@ -5,11 +5,13 @@ import { useEffect, useContext } from "react";
 import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faPrint } from "@fortawesome/free-solid-svg-icons";
-import UpdateForm from "./ArticleLineUpdateForm.jsx";
 import { PosContext } from "./context/PosContext.jsx";
 import AsideButton from "./AsideButton.jsx";
 import ArticleLineUpdateForm from "./ArticleLineUpdateForm.jsx";
 import ArticleCreateForm from "./ArticleCreateForm.jsx";
+import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 export default function TpvInterface() {
   const {
@@ -25,6 +27,8 @@ export default function TpvInterface() {
     selectedArticleLine,
     setSelectedArticleLine,
   } = useContext(PosContext);
+
+  const [clearArticlesLines, setClearArticlesLines] = useState(false);
 
   const printerURL = "http://localhost:6500";
 
@@ -105,13 +109,14 @@ export default function TpvInterface() {
   }, [articlesLines]);
 
   const handleSendData = async (articlesLines) => {
-    await fetch(printerURL + "/print", {
+    const res = await fetch(printerURL + "/print", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ articlesLines, totalBill }),
-    }).then(() => {
-      setArticlesLines([]);
     });
+    if (res.ok) {
+      setClearArticlesLines((prev) => !prev);
+    }
   };
 
   const handleOpenDrawer = async () => {
@@ -160,9 +165,9 @@ export default function TpvInterface() {
               style={"danger"}
             />
           </div>
-          <h3>
+          <h3 className="text-xl xl:text-4xl">
             Total:{" "}
-            <span className="font-semibold text-4xl">
+            <span className="font-semibold text-xl xl:text-4xl">
               {Number(totalBill).toFixed(2).toString().replace(".", ",")}
             </span>{" "}
             €
@@ -211,14 +216,15 @@ export default function TpvInterface() {
           <div className="grid xl:grid-cols-2 justify-items-center gap-1 xl:gap-2">
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="flex flex-col justify-center items-center px-2 py-1 size-20 xl:size-28 rounded bg-blue-400 hover:ring hover:text-blue-400 hover:bg-blue-200 ring-blue-400 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={handleOpenDrawer}
             >
+              <FontAwesomeIcon icon={faCashRegister} size="2x" />
               Abrir cajón
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-orange-500 hover:ring hover:text-orange-500 hover:bg-orange-200 ring-orange-500 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={() => handleSendData(articlesLines)}
             >
               <FontAwesomeIcon icon={faPrint} size="2x" />
@@ -226,13 +232,14 @@ export default function TpvInterface() {
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-500 hover:ring hover:text-gray-500 hover:bg-gray-200 ring-gray-500 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
+              <FontAwesomeIcon icon={faGear} size="2x" />
               Configurar Impresora
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-red-700 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-red-700 hover:ring hover:text-red-700 hover:bg-red-200 ring-red-700 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
               <FontAwesomeIcon icon={faDoorOpen} size="2x" />
               <p>Salir</p>
