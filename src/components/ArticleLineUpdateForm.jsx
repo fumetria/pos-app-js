@@ -40,7 +40,7 @@ export default function ArticleLineUpdateForm({
 
   return (
     <>
-      <div className="bg-stone-100 h-full  border-stone-300 px-2">
+      <div className="bg-stone-100 h-full grid justify-items-center py-2  border-stone-300 px-2">
         <form action="">
           <div className="grid">
             <label htmlFor="details" className="font-semibold uppercase">
@@ -51,7 +51,7 @@ export default function ArticleLineUpdateForm({
               id="name"
               name="name"
               value={formData.name}
-              className="bg-stone-300 border rounded xl:py-2 ps-3"
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3 uppercase"
               disabled={true}
             />
           </div>
@@ -64,7 +64,7 @@ export default function ArticleLineUpdateForm({
               id="details"
               name="details"
               value={formData.details}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3 uppercase"
               onChange={handleChange}
             />
           </div>
@@ -77,7 +77,7 @@ export default function ArticleLineUpdateForm({
               id="quantity"
               name="quantity"
               value={formData.quantity}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3 uppercase"
               onChange={handleChange}
             />
           </div>
@@ -90,7 +90,7 @@ export default function ArticleLineUpdateForm({
               id="price"
               name="price"
               value={formData.price}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3 uppercase"
               onChange={handleChange}
             />
           </div>
