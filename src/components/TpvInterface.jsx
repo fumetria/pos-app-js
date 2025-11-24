@@ -14,13 +14,9 @@ import ArticleCreateForm from "./ArticleCreateForm.jsx";
 export default function TpvInterface() {
   const {
     articles,
-    setArticles,
-    reloadArticles,
-    setReloadArticles,
     articlesList,
     setArticlesList,
     selectedCategory,
-    setSelectedCategory,
     handleCategorySelect,
     articlesLines,
     setArticlesLines,
@@ -90,7 +86,7 @@ export default function TpvInterface() {
   useEffect(() => {
     const updateArticleList = () => {
       const aList = articles.filter(
-        (article) => article.category === selectedCategory
+        (article) => article.category.toLowerCase() === selectedCategory
       );
       setArticlesList(aList);
     };
@@ -185,17 +181,14 @@ export default function TpvInterface() {
             handleDeleteLine={handleDeleteLine}
           />
         </div> */}
-        <div className="col-start-5 col-end-7 row-start-1 row-end-4 bg-stone-300 rounded border-s border-stone-300">
+        <div className="col-start-5 col-end-7 row-start-1 row-end-4 xl:row-end-3 bg-stone-300 rounded border-s border-stone-300">
           <ArticleLineUpdateForm
             selectedArticleLine={selectedArticleLine}
             handleUpdateArticleLine={handleUpdateArticleLine}
           />
         </div>
-        <div className="col-start-5 col-end-7 row-start-4 row-end-6 bg-stone-300 rounded border-s border-t border-stone-300">
-          <ArticleCreateForm
-            selectedArticleLine={selectedArticleLine}
-            handleUpdateArticleLine={handleUpdateArticleLine}
-          />
+        <div className="col-start-5 col-end-7 row-start-4 xl:row-start-3 row-end-6 bg-stone-300 rounded border-s border-t border-stone-300">
+          <ArticleCreateForm />
         </div>
         <div className="col-start-3 col-end-5 row-start-4 row-end-5 bg-stone-300 m-2 rounded">
           <ArticlesSection
@@ -218,14 +211,14 @@ export default function TpvInterface() {
           <div className="grid xl:grid-cols-2 justify-items-center gap-1 xl:gap-2">
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={handleOpenDrawer}
             >
               Abrir cajón
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
               onClick={() => handleSendData(articlesLines)}
             >
               <FontAwesomeIcon icon={faPrint} size="2x" />
@@ -233,13 +226,13 @@ export default function TpvInterface() {
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-30 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-400 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
               Configurar Impresora
             </button>
             <button
               type="button"
-              className="px-2 py-1 size-20 xl:size-30 rounded bg-red-700 text-stone-100 text-sm xl:text-base cursor-pointer"
+              className="px-2 py-1 size-20 xl:size-28 rounded bg-red-700 text-stone-100 text-sm xl:text-base cursor-pointer"
             >
               <FontAwesomeIcon icon={faDoorOpen} size="2x" />
               <p>Salir</p>
