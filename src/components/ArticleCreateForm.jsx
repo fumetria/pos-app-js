@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { PosContext } from "./context/PosContext";
 
-export default function ArticleCreateForm({
-  selectedArticleLine,
-  handleUpdateArticleLine,
-}) {
+export default function ArticleCreateForm({ selectedArticleLine }) {
+  const [erroMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
-    id: "",
+    cod_art: "",
     name: "",
-    details: "",
-    quantity: "",
-    price: "",
+    category: "",
+    pvp: "",
   });
+
+  const { apiURL, reloadArticles, setReloadArticles } = useContext(PosContext);
 
   useEffect(() => {
     const updateFormData = () => {
@@ -18,11 +18,10 @@ export default function ArticleCreateForm({
         setFormData(selectedArticleLine);
       } else {
         setFormData({
-          id: "",
+          cod_art: "",
           name: "",
-          details: "",
-          quantity: "",
-          price: "",
+          category: "",
+          pvp: "",
         });
       }
     };
@@ -38,12 +37,42 @@ export default function ArticleCreateForm({
     }));
   };
 
+  const handleCreateArticle = async (newArticle) => {
+    try {
+      await fetch(apiURL, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(newArticle),
+      });
+      setFormData({ cod_art: "", name: "", category: "", pvp: "" });
+      setReloadArticles(!reloadArticles);
+    } catch (error) {
+      setErrorMsg(`Error al crear pelicula: ${error} `);
+    }
+  };
+
   return (
     <>
-      <div className="bg-stone-100 h-full  border-stone-300 px-2">
-        <form action="">
+      <div className="bg-stone-100 h-full grid justify-items-center py-2  border-stone-300 px-2">
+        <form action="" className="xl:mx-4">
           <div className="grid">
-            <label htmlFor="details" className="font-semibold uppercase">
+            <label
+              htmlFor="cod_art"
+              className="font-semibold uppercase text-sm md:text-base"
+            >
+              código articulo
+            </label>
+            <input
+              type="text"
+              id="cod_art"
+              name="cod_art"
+              value={formData.cod_art}
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid">
+            <label htmlFor="name" className="font-semibold uppercase">
               Nombre Articulo
             </label>
             <input
@@ -51,57 +80,49 @@ export default function ArticleCreateForm({
               id="name"
               name="name"
               value={formData.name}
-              className="bg-stone-300 border rounded xl:py-2 ps-3"
-              disabled={true}
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3"
+              onChange={handleChange}
             />
           </div>
           <div className="grid">
-            <label htmlFor="details" className="font-semibold uppercase">
-              Detalles
+            <label htmlFor="category" className="font-semibold uppercase">
+              Categoria
             </label>
             <input
               type="text"
-              id="details"
-              name="details"
-              value={formData.details}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
+              id="category"
+              name="category"
+              value={formData.category}
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3"
               onChange={handleChange}
             />
           </div>
           <div className="grid">
-            <label htmlFor="quantity" className="font-semibold uppercase">
-              Cantidad
-            </label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              value={formData.quantity}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="grid">
-            <label htmlFor="price" className="font-semibold uppercase">
+            <label htmlFor="pvp" className="font-semibold uppercase">
               Precio
             </label>
             <input
               type="number"
-              id="price"
-              name="price"
+              id="pvp"
+              name="pvp"
               value={formData.price}
-              className="bg-stone-300 border rounded md:py-1 xl:py-2 ps-3"
+              className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3"
               onChange={handleChange}
+              min={0}
             />
           </div>
-          <div className="grid justify-items-center my-1 ">
+          <div className="grid justify-items-center mt-4 ">
             <button
               type="button"
-              className="xl:text-xl bg-blue-400 text-stone-100 font-semibold px-2 py-1 rounded"
-              onClick={() => handleUpdateArticleLine(formData)}
+              className="xl:text-xl bg-blue-400 hover:ring hover:bg-blue-200 hover:text-blue-400 ring-blue-400  text-stone-100 font-semibold px-2 py-1 rounded capitalize"
+              onClick={() => handleCreateArticle(formData)}
+              title="Nuevo articulo"
             >
-              Actualizar
+              crear
             </button>
+            <p className="text-red-600 text-xs">
+              {erroMsg.length > 0 ? erroMsg : ""}
+            </p>
           </div>
         </form>
       </div>
