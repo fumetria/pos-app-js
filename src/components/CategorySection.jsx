@@ -13,7 +13,7 @@ export default function CategorySection({
   useEffect(() => {
     const createCategoryList = () => {
       setCategoryList([
-        ...new Set(articles.map((article) => article.category)),
+        ...new Set(articles.map((article) => article.category.toLowerCase())),
       ]);
     };
 
