@@ -159,6 +159,12 @@ export const articles = [
 ]
 
 const apiURL = 'https://68dc4aaa7cd1948060a9ef39.mockapi.io/api/v1/fuApi/articles';
+
+function progresBar(currentEjecution, total) {
+    const percent = ((currentEjecution / total) * 100).toFixed(2);
+    console.clear();
+    console.log(`Procesando ${currentEjecution}/${total} - ${percent}%`);
+}
 async function submitArticle(article) {
     await fetch(apiURL, {
         method: 'POST',
@@ -174,10 +180,13 @@ async function submitArticle(article) {
 }
 
 async function insertMockData(articles) {
+    const totalElements = articles.length;
     for (let i = 0; i < articles.length; i++) {
         const article = articles[i];
         await submitArticle(article);
+        progresBar(i, totalElements);
     }
+    progresBar(totalElements, totalElements);
 }
 
 insertMockData(articles);
