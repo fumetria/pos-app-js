@@ -1,7 +1,7 @@
 import ArticlesLineTable from "./ArticleLinesTable.jsx";
 import ArticlesSection from "./ArticlesSection.jsx";
 import CategorySection from "./CategorySection.jsx";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -17,13 +17,11 @@ export default function TpvInterface() {
   const {
     articles,
     articlesList,
-    setArticlesList,
     selectedCategory,
     handleCategorySelect,
     articlesLines,
     setArticlesLines,
     totalBill,
-    setTotalBill,
     selectedArticleLine,
     setSelectedArticleLine,
   } = useContext(PosContext);
@@ -87,26 +85,6 @@ export default function TpvInterface() {
     });
     setSelectedArticleLine(null);
   };
-  useEffect(() => {
-    const updateArticleList = () => {
-      const aList = articles.filter(
-        (article) => article.category.toLowerCase() === selectedCategory
-      );
-      setArticlesList(aList);
-    };
-    updateArticleList();
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    const updateTotalBill = () => {
-      const total = articlesLines.reduce(
-        (totals, articleLine) => totals + articleLine.total,
-        0
-      );
-      setTotalBill(total);
-    };
-    updateTotalBill();
-  }, [articlesLines]);
 
   const handleSendData = async (articlesLines) => {
     const res = await fetch(printerURL + "/print", {

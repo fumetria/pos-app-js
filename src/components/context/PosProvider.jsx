@@ -30,8 +30,6 @@ export function PosProvider({ children }) {
   const [selectedCategory, setSelectedCategory] = useState();
   const [selectedArticleLine, setSelectedArticleLine] = useState(null);
 
-  useEffect(() => console.log("Articles", articles), [articles]);
-
   useEffect(() => {
     if (articles.length > 0) {
       setSelectedCategory(articles[0].category.toLowerCase());
@@ -40,6 +38,37 @@ export function PosProvider({ children }) {
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
   };
+  useEffect(() => {
+    const updateTotalBill = () => {
+      const total = articlesLines.reduce(
+        (totals, articleLine) => totals + articleLine.total,
+        0
+      );
+      setTotalBill(total);
+    };
+    updateTotalBill();
+  }, [articlesLines, setTotalBill]);
+
+  const handleDeleteArticle = async (articleId) => {
+    try {
+      const res = await fetch(apiURL + `/${articleId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("No se ha actualizado correctamente");
+      setReloadArticles((prevStatus) => !prevStatus);
+    } catch (error) {
+      console.log(error, "No se ha actualizado correctamente");
+    }
+  };
+  useEffect(() => {
+    const updateArticleList = () => {
+      const aList = articles.filter(
+        (article) => article.category.toLowerCase() === selectedCategory
+      );
+      setArticlesList(aList);
+    };
+    updateArticleList();
+  }, [selectedCategory, articles]);
 
   return (
     <PosContext.Provider
@@ -60,6 +89,7 @@ export function PosProvider({ children }) {
         setTotalBill,
         selectedArticleLine,
         setSelectedArticleLine,
+        handleDeleteArticle,
       }}
     >
       {children}
