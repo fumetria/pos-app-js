@@ -42,6 +42,9 @@ export default function ArticleLineUpdateForm({
     <>
       <div className="bg-stone-100 h-full grid justify-items-center py-2  border-stone-300 px-2">
         <form action="">
+          <h2 className="capitalize font-bold text-sm md:text-base xl:text-2xl text-center mb-2">
+            Actualización Lineas
+          </h2>
           <div className="grid">
             <label htmlFor="details" className="font-semibold uppercase">
               Nombre Articulo
