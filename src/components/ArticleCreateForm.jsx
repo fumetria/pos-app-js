@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { PosContext } from "./context/PosContext";
 
-export default function ArticleCreateForm({ selectedArticleLine }) {
+export default function ArticleCreateForm() {
   const [erroMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
     cod_art: "",
@@ -10,12 +10,19 @@ export default function ArticleCreateForm({ selectedArticleLine }) {
     pvp: "",
   });
 
-  const { apiURL, reloadArticles, setReloadArticles } = useContext(PosContext);
+  const { apiURL, reloadArticles, setReloadArticles, selectedArticle } =
+    useContext(PosContext);
 
   useEffect(() => {
     const updateFormData = () => {
-      if (selectedArticleLine) {
-        setFormData(selectedArticleLine);
+      if (selectedArticle) {
+        setFormData({
+          id: selectedArticle.id,
+          cod_art: selectedArticle.cod_art,
+          name: selectedArticle.name,
+          category: selectedArticle.category,
+          pvp: selectedArticle.pvp,
+        });
       } else {
         setFormData({
           cod_art: "",
@@ -27,7 +34,7 @@ export default function ArticleCreateForm({ selectedArticleLine }) {
     };
 
     updateFormData();
-  }, [selectedArticleLine]);
+  }, [selectedArticle]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -51,10 +58,27 @@ export default function ArticleCreateForm({ selectedArticleLine }) {
     }
   };
 
+  const handleUpdateArticle = async () => {
+    try {
+      await fetch(apiURL + `/${formData.id}`, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      setFormData({ cod_art: "", name: "", category: "", pvp: "" });
+      setReloadArticles(!reloadArticles);
+    } catch (error) {
+      console.log("Error al actualizar. ", error);
+    }
+  };
+
   return (
     <>
       <div className="bg-stone-100 h-full grid justify-items-center py-2  border-stone-300 px-2">
         <form action="" className="xl:mx-4">
+          <h2 className="capitalize font-bold text-sm md:text-base xl:text-2xl text-center mb-2">
+            Mantenimiento Articulos
+          </h2>
           <div className="grid">
             <label
               htmlFor="cod_art"
@@ -105,7 +129,7 @@ export default function ArticleCreateForm({ selectedArticleLine }) {
               type="number"
               id="pvp"
               name="pvp"
-              value={formData.price}
+              value={formData.pvp}
               className="bg-stone-300 border rounded w-36 lg:w-60 xl:w-96 lg:py-1 ps-3"
               onChange={handleChange}
               min={0}
@@ -117,8 +141,18 @@ export default function ArticleCreateForm({ selectedArticleLine }) {
               className="xl:text-xl bg-blue-400 hover:ring hover:bg-blue-200 hover:text-blue-400 ring-blue-400  text-stone-100 font-semibold px-2 py-1 rounded capitalize"
               onClick={() => handleCreateArticle(formData)}
               title="Nuevo articulo"
+              hidden={formData.id ? true : false}
             >
               crear
+            </button>
+            <button
+              type="button"
+              className="xl:text-xl bg-orange-500 hover:ring hover:bg-orange-200 hover:text-orange-500 ring-orange-500  text-stone-100 font-semibold px-2 py-1 rounded capitalize"
+              onClick={() => handleUpdateArticle(formData)}
+              title="Actualizar articulo"
+              hidden={formData.id ? false : true}
+            >
+              actualizar
             </button>
             <p className="text-red-600 text-xs">
               {erroMsg.length > 0 ? erroMsg : ""}

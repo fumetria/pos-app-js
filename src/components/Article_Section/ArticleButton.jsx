@@ -5,6 +5,7 @@ export default function ArticleButton({
   article,
   handleNewArticleLine,
   handleDeleteArticle,
+  handleUpdateArticleForm,
 }) {
   return (
     <>
@@ -14,7 +15,7 @@ export default function ArticleButton({
         className="grid grid_rows_5 bg-stone-100 size-20 md:size-24 xl:size-30 cursor-pointer rounded shadow"
       >
         <div className="row-start-1 row-end-2 flex justify-between items-start px-1">
-          <div>
+          <div onClick={() => handleUpdateArticleForm(article)}>
             <FontAwesomeIcon
               icon={faPencil}
               size="xs"

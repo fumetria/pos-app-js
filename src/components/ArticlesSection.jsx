@@ -8,7 +8,8 @@ export default function ArticlesSection({
   handleNewArticleLine,
   isSelected,
 }) {
-  const { handleDeleteArticle } = useContext(PosContext);
+  const { handleDeleteArticle, handleUpdateArticleForm } =
+    useContext(PosContext);
   const [articlesList, setArticlesList] = useState([]);
   useEffect(() => {
     setArticlesList(articles);
@@ -27,6 +28,7 @@ export default function ArticlesSection({
               handleNewArticleLine={() => handleNewArticleLine(article)}
               isSelected={isSelected}
               handleDeleteArticle={handleDeleteArticle}
+              handleUpdateArticleForm={handleUpdateArticleForm}
             />
           ))}
       </section>
