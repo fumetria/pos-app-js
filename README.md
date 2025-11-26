@@ -8,9 +8,10 @@ Para poder imprimir los tickets hemos creado un servidor local que gestiona toda
 
 ## Tecnologías utilizadas
 
-- React
-- Tailwind CSS
-- MockAPI
+- [React](https://react.dev/)
+- [Tailwind CSS](https://docs.fontawesome.com/v5/web/use-with/react)
+- [MockAPI](mockapi.io)
+- [Font Awesome React](https://docs.fontawesome.com/v5/web/use-with/react)
 
 ## Instalación
 
@@ -23,4 +24,19 @@ Si no tenemos PNPM instalado:
 
 ```shell
 npm install -g pnpm
+```
+
+## Printer server
+
+Para ejectuar nuestro servidor de impresión:
+
+```
+cd /printer-server
+npm install
+```
+
+Copiamos el _.env.example_ a _.env_ y modificamos las variable de enterno conforme a nuestra configuración.
+
+```
+npm start
 ```
