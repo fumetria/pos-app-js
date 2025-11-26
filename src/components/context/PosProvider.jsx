@@ -29,6 +29,7 @@ export function PosProvider({ children }) {
   const [articlesList, setArticlesList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
   const [selectedArticleLine, setSelectedArticleLine] = useState(null);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   useEffect(() => {
     if (articles.length > 0) {
@@ -48,6 +49,9 @@ export function PosProvider({ children }) {
     };
     updateTotalBill();
   }, [articlesLines, setTotalBill]);
+  useEffect(() => {
+    console.log("selectedArticle: ", selectedArticle);
+  }, [selectedArticle]);
 
   const handleDeleteArticle = async (articleId) => {
     try {
@@ -70,6 +74,10 @@ export function PosProvider({ children }) {
     updateArticleList();
   }, [selectedCategory, articles]);
 
+  const handleUpdateArticleForm = (article) => {
+    setSelectedArticle(article);
+  };
+
   return (
     <PosContext.Provider
       value={{
@@ -90,6 +98,9 @@ export function PosProvider({ children }) {
         selectedArticleLine,
         setSelectedArticleLine,
         handleDeleteArticle,
+        handleUpdateArticleForm,
+        selectedArticle,
+        setSelectedArticle,
       }}
     >
       {children}

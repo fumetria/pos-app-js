@@ -12,6 +12,7 @@ import ArticleCreateForm from "./ArticleCreateForm.jsx";
 import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function TpvInterface() {
   const {
@@ -27,6 +28,10 @@ export default function TpvInterface() {
   } = useContext(PosContext);
 
   const [clearArticlesLines, setClearArticlesLines] = useState(false);
+
+  useEffect(() => {
+    setArticlesLines([]);
+  }, [clearArticlesLines, setArticlesLines]);
 
   const printerURL = "http://localhost:6500";
 
