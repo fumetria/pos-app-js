@@ -78,7 +78,7 @@ export default function Modal({
               </ModalContent>
             </div>
           </div>,
-          document.getElementById("modal-root")
+          document.body
         )}
     </>
   );
