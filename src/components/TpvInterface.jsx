@@ -13,6 +13,9 @@ import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useEffect } from "react";
+import Modal from "./Modal.jsx";
+import ClientLogo from "./ClientLogo.jsx";
+import ClientTitle from "./ClientTitle.jsx";
 
 export default function TpvInterface() {
   const {
@@ -187,14 +190,8 @@ export default function TpvInterface() {
         </div>
         <div className="bg-grey-300 col-start-7 col-end-8 row-start-1 row-end-6 bg-stone-100 py-2 flex flex-col justify-between border-s border-stone-300">
           <div className="flex flex-col justify-center justify-items-center items-center">
-            <img
-              src="/iestacio_logo.png"
-              alt="ies estació logo"
-              className="w-[100px] h-20 xl:w-[153px] xl:h-[100px]"
-            />
-            <p className="text-center font-semibold text-lg xl:text-2xl">
-              Cafeteria L'Estació
-            </p>
+            <ClientLogo />
+            <ClientTitle />
           </div>
           <div className="grid xl:grid-cols-2 justify-items-center gap-1 xl:gap-2">
             <button
@@ -227,6 +224,15 @@ export default function TpvInterface() {
               <FontAwesomeIcon icon={faDoorOpen} size="2x" />
               <p>Salir</p>
             </button>
+            <Modal
+              wLabel={"Puerto impresión"}
+              btnLabel={"Configurar impresora"}
+              btnIcon={<FontAwesomeIcon icon={faGear} size="2x" />}
+              btnStyle={
+                "px-2 py-1 size-20 xl:size-28 rounded bg-gray-500 hover:ring hover:text-gray-500 hover:bg-gray-200 ring-gray-500 text-stone-100 text-sm xl:text-base cursor-pointer"
+              }
+              closeBtn={true}
+            ></Modal>
           </div>
         </div>
         <div className="row-start-6 row-end-7 bg-stone-100 col-start-1 col-end-8 border-t border-stone-300">
