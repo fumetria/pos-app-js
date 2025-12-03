@@ -31,6 +31,8 @@ export function PosProvider({ children }) {
   const [selectedArticleLine, setSelectedArticleLine] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
 
+  const printerURL = "http://localhost:6500";
+
   useEffect(() => {
     if (articles.length > 0) {
       setSelectedCategory(articles[0].category.toLowerCase());
@@ -101,6 +103,7 @@ export function PosProvider({ children }) {
         handleUpdateArticleForm,
         selectedArticle,
         setSelectedArticle,
+        printerURL,
       }}
     >
       {children}

@@ -4,18 +4,13 @@ import CategorySection from "./CategorySection.jsx";
 import { useContext } from "react";
 import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDoorOpen, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { PosContext } from "./context/PosContext.jsx";
 import AsideButton from "./AsideButton.jsx";
 import ArticleLineUpdateForm from "./ArticleLineUpdateForm.jsx";
 import ArticleCreateForm from "./ArticleCreateForm.jsx";
-import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useEffect } from "react";
-import Modal from "./Modal.jsx";
-import ClientLogo from "./ClientLogo.jsx";
-import ClientTitle from "./ClientTitle.jsx";
+import TpvAside from "./TpvAside.jsx";
 
 export default function TpvInterface() {
   const {
@@ -36,7 +31,7 @@ export default function TpvInterface() {
     setArticlesLines([]);
   }, [clearArticlesLines, setArticlesLines]);
 
-  const printerURL = "http://localhost:6500";
+  // const printerURL = "http://localhost:6500";
 
   const handleNewArticleLine = (article) => {
     setArticlesLines((prevLines) => {
@@ -92,29 +87,6 @@ export default function TpvInterface() {
       return prevLines;
     });
     setSelectedArticleLine(null);
-  };
-
-  const handleSendData = async (articlesLines) => {
-    const res = await fetch(printerURL + "/print", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ articlesLines, totalBill }),
-    });
-    if (res.ok) {
-      setClearArticlesLines((prev) => !prev);
-    }
-  };
-
-  const handleOpenDrawer = async () => {
-    await fetch(printerURL + "/open-drawer", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({}),
-    }).then((res) => {
-      if (res.ok) {
-        console.log("¿Funcionó?");
-      }
-    });
   };
 
   const handleSelectArticleLine = async (article) => {
@@ -189,51 +161,7 @@ export default function TpvInterface() {
           />
         </div>
         <div className="bg-grey-300 col-start-7 col-end-8 row-start-1 row-end-6 bg-stone-100 py-2 flex flex-col justify-between border-s border-stone-300">
-          <div className="flex flex-col justify-center justify-items-center items-center">
-            <ClientLogo />
-            <ClientTitle />
-          </div>
-          <div className="grid xl:grid-cols-2 justify-items-center gap-1 xl:gap-2">
-            <button
-              type="button"
-              className="flex flex-col justify-center items-center px-2 py-1 size-20 xl:size-28 rounded bg-blue-400 hover:ring hover:text-blue-400 hover:bg-blue-200 ring-blue-400 text-stone-100 text-sm xl:text-base cursor-pointer"
-              onClick={handleOpenDrawer}
-            >
-              <FontAwesomeIcon icon={faCashRegister} size="2x" />
-              Abrir cajón
-            </button>
-            <button
-              type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-orange-500 hover:ring hover:text-orange-500 hover:bg-orange-200 ring-orange-500 text-stone-100 text-sm xl:text-base cursor-pointer"
-              onClick={() => handleSendData(articlesLines)}
-            >
-              <FontAwesomeIcon icon={faPrint} size="2x" />
-              Imprimir
-            </button>
-            <button
-              type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-gray-500 hover:ring hover:text-gray-500 hover:bg-gray-200 ring-gray-500 text-stone-100 text-sm xl:text-base cursor-pointer"
-            >
-              <FontAwesomeIcon icon={faGear} size="2x" />
-              Configurar Impresora
-            </button>
-            <button
-              type="button"
-              className="px-2 py-1 size-20 xl:size-28 rounded bg-red-700 hover:ring hover:text-red-700 hover:bg-red-200 ring-red-700 text-stone-100 text-sm xl:text-base cursor-pointer"
-            >
-              <FontAwesomeIcon icon={faDoorOpen} size="2x" />
-              <p>Salir</p>
-            </button>
-            <Modal
-              wLabel={"Puerto impresión"}
-              btnLabel={"Configurar impresora"}
-              btnIcon={<FontAwesomeIcon icon={faGear} size="2x" />}
-              btnStyle={
-                "px-2 py-1 size-20 xl:size-28 rounded bg-gray-500 hover:ring hover:text-gray-500 hover:bg-gray-200 ring-gray-500 text-stone-100 text-sm xl:text-base cursor-pointer"
-              }
-              closeBtn={true}
-            ></Modal>
-          </div>
+          <TpvAside />
         </div>
         <div className="row-start-6 row-end-7 bg-stone-100 col-start-1 col-end-8 border-t border-stone-300">
           <div className="flex gap-2 odd:border-e border-stone-300">
