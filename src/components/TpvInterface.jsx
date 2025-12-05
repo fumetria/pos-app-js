@@ -4,12 +4,14 @@ import CategorySection from "./CategorySection.jsx";
 import { useContext } from "react";
 import ArticleLinesTableAsideBtns from "./ArticleLinesTableAsideBtns.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleXmark,
+  faCircleCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { PosContext } from "./context/PosContext.jsx";
 import AsideButton from "./AsideButton.jsx";
 import ArticleLineUpdateForm from "./ArticleLineUpdateForm.jsx";
 import ArticleCreateForm from "./ArticleCreateForm.jsx";
-import { useState } from "react";
-import { useEffect } from "react";
 import TpvAside from "./TpvAside.jsx";
 
 export default function TpvInterface() {
@@ -23,15 +25,9 @@ export default function TpvInterface() {
     totalBill,
     selectedArticleLine,
     setSelectedArticleLine,
+    localPrinterUrl,
+    isPrinterConnect,
   } = useContext(PosContext);
-
-  const [clearArticlesLines, setClearArticlesLines] = useState(false);
-
-  useEffect(() => {
-    setArticlesLines([]);
-  }, [clearArticlesLines, setArticlesLines]);
-
-  // const printerURL = "http://localhost:6500";
 
   const handleNewArticleLine = (article) => {
     setArticlesLines((prevLines) => {
@@ -177,6 +173,20 @@ export default function TpvInterface() {
             </div>
             <div className="border-e border-stone-300 px-2">
               Importe: <span>0,00</span>€
+            </div>
+            <div className="border-e border-stone-300 px-2">
+              {localPrinterUrl}
+              {isPrinterConnect ? (
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="text-green-500"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="text-red-500"
+                />
+              )}
             </div>
           </div>
         </div>
