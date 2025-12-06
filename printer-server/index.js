@@ -17,6 +17,9 @@ app.get('/status', async (req, res) => {
     res.json({ printerIsConnected: isConnected, printerInfo: printerInfo.path });
 })
 
+app.get('/', (req, res) => {
+    res.sendStatus(200);
+})
 
 
 app.post('/print', async (req, res) => {

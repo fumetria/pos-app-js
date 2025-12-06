@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
-function ModalContent({ onClose, children, closeBtn }) {
+function ModalContent({ onClose, children, closeBtn, handleCloseModal }) {
   return (
     <div className="bg-white p-4 rounded shadow-xl z-50">
-      <div>{children}</div>
+      <div>{children({ handleCloseModal })}</div>
       {closeBtn ? (
         <button
           onClick={onClose}
@@ -40,6 +40,10 @@ export default function Modal({
 }) {
   const [showModal, setShowModal] = useState(false);
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <button
@@ -73,6 +77,7 @@ export default function Modal({
               <ModalContent
                 onClose={() => setShowModal(false)}
                 closeBtn={closeBtn}
+                handleCloseModal={handleCloseModal}
               >
                 {children}
               </ModalContent>

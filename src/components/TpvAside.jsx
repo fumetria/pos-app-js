@@ -5,17 +5,36 @@ import {
   faCashRegister,
   faGear,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PosContext } from "./context/PosContext";
 import Modal from "./Modal.jsx";
 import ClientLogo from "./ClientLogo.jsx";
 import ClientTitle from "./ClientTitle.jsx";
 
 export default function TpvAside() {
-  const { totalBill, articlesLines, printerURL } = useContext(PosContext);
+  const { totalBill, articlesLines, localPrinterUrl, setLocalPrinterUrl } =
+    useContext(PosContext);
+  const [newLocalPrinterUrl, setNewLocalPrinterUrl] = useState("");
 
+  const handleNewPrintUrl = () => {
+    if (newLocalPrinterUrl == "") {
+      return;
+    }
+    setLocalPrinterUrl(newLocalPrinterUrl);
+    localStorage.setItem("localPrinterUrl", newLocalPrinterUrl);
+    console.log(localStorage.getItem("localPrinterUrl"));
+    setNewLocalPrinterUrl("");
+  };
+
+  const handleChange = (event) => {
+    const newUrl = event.target.value;
+    if (newUrl == "") {
+      return;
+    }
+    setNewLocalPrinterUrl(newUrl);
+  };
   const handleSendData = async (articlesLines) => {
-    const res = await fetch(printerURL + "/print", {
+    const res = await fetch(localPrinterUrl + "/print", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ articlesLines, totalBill }),
@@ -26,7 +45,7 @@ export default function TpvAside() {
   };
 
   const handleOpenDrawer = async () => {
-    await fetch(printerURL + "/open-drawer", {
+    await fetch(localPrinterUrl + "/open-drawer", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({}),
@@ -67,15 +86,32 @@ export default function TpvAside() {
           btnStyle={
             "px-2 py-1 size-20 xl:size-28 rounded bg-gray-500 hover:ring hover:text-gray-500 hover:bg-gray-200 ring-gray-500 text-stone-100 text-sm xl:text-base cursor-pointer"
           }
-          closeBtn={true}
+          windowX={true}
         >
-          <form action="">
-            <input
-              type="text"
-              placeholder="Introduce ruta de impresión"
-              value={printerURL}
-            />
-          </form>
+          {({ handleCloseModal }) => (
+            <form action="" className="grid gap-2 justify-items-center">
+              <input
+                className="border rounded border-stone-300 ps-1 w-full"
+                id="printer_url"
+                type="text"
+                placeholder="Introduce ruta de impresión"
+                value={newLocalPrinterUrl}
+                onChange={handleChange}
+                title="Introduce ruta de impresión"
+                required={true}
+              />
+              <button
+                className="max-w-fit bg-orange-500 hover:ring hover:bg-orange-200 hover:text-orange-500 ring-orange-500  text-stone-100 font-semibold px-2 py-1 rounded capitalize"
+                type="button"
+                onClick={() => {
+                  handleNewPrintUrl(newLocalPrinterUrl);
+                  handleCloseModal();
+                }}
+              >
+                Actualizar
+              </button>
+            </form>
+          )}
         </Modal>
         <button
           type="button"

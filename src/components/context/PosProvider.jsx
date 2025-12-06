@@ -30,8 +30,28 @@ export function PosProvider({ children }) {
   const [selectedCategory, setSelectedCategory] = useState();
   const [selectedArticleLine, setSelectedArticleLine] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [localPrinterUrl, setLocalPrinterUrl] = useState(() => {
+    if (localStorage.getItem("localPrinterUrl")) {
+      return localStorage.getItem("localPrinterUrl");
+    }
+    return "http://localhost:6500";
+  });
+  const [isPrinterConnect, setIsPrinterConnect] = useState(false);
 
-  const printerURL = "http://localhost:6500";
+  useEffect(() => {
+    async function isPrinterConnect() {
+      try {
+        const response = await fetch(localPrinterUrl + "/");
+        setIsPrinterConnect(response.ok);
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
+        setIsPrinterConnect(false);
+      }
+    }
+
+    isPrinterConnect();
+  }, [localPrinterUrl]);
+  // const printerURL = "http://localhost:6500";
 
   useEffect(() => {
     if (articles.length > 0) {
@@ -103,7 +123,10 @@ export function PosProvider({ children }) {
         handleUpdateArticleForm,
         selectedArticle,
         setSelectedArticle,
-        printerURL,
+        localPrinterUrl,
+        setLocalPrinterUrl,
+        isPrinterConnect,
+        setIsPrinterConnect,
       }}
     >
       {children}
